@@ -17,11 +17,15 @@ export function TopBar({ courseChip }: { courseChip?: CourseChip | undefined }) 
           type="button"
           className="ml-6 flex items-center gap-2 rounded-lg bg-card px-3 py-1.5 text-[14px] font-bold text-foreground"
         >
-          {courseChip.emoji && <span className="text-[15px]">{courseChip.emoji}</span>}
+          <svg viewBox="0 0 24 24" className="size-[18px]" aria-hidden="true">
+            <path d="M2 9 12 4.5 22 9l-10 4.5L2 9Z" fill="oklch(0.82 0.14 85)" />
+            <path d="M6 11.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5l-6 2.7-6-2.7Z" fill="oklch(0.72 0.15 60)" />
+          </svg>
           <span>{courseChip.label}</span>
           <ChevronRight className="size-4 text-muted-foreground" strokeWidth={2.4} />
         </button>
       )}
+
 
       <div className="ml-auto flex items-center gap-5">
         <span className="flex items-center gap-2 rounded-md bg-card px-2.5 py-1">
