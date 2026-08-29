@@ -1,6 +1,7 @@
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { PwLogo } from "./PwLogo";
+import pwLogo from "@/assets/pw-logo.png";
+import studentAvatar from "@/assets/student-avatar.png";
 
 export type CourseChip = { label: string; emoji?: string | undefined };
 
@@ -8,7 +9,9 @@ export function TopBar({ courseChip }: { courseChip?: CourseChip | undefined }) 
   return (
     <header className="flex h-[56px] shrink-0 items-center gap-4 bg-topbar px-5 text-topbar-foreground">
       <Link to="/" className="flex items-center gap-2.5">
-        <PwLogo className="size-8 text-topbar-foreground" />
+        <span className="grid size-8 place-items-center overflow-hidden rounded-full bg-card">
+          <img src={pwLogo} alt="Physics Wallah logo" className="size-8 object-contain" />
+        </span>
         <span className="text-[19px] font-bold tracking-[-0.01em]">Physics Wallah</span>
       </Link>
 
