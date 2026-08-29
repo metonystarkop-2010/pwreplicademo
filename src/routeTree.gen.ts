@@ -10,33 +10,401 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AllClassesRouteImport } from './routes/all-classes'
+import { Route as AllTestsRouteImport } from './routes/all-tests'
+import { Route as BatchesRouteImport } from './routes/batches'
+import { Route as BattlegroundsRouteImport } from './routes/battlegrounds'
+import { Route as BookmarksRouteImport } from './routes/bookmarks'
+import { Route as ChaptersRouteImport } from './routes/chapters'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as DishaRouteImport } from './routes/disha'
+import { Route as HelpSupportRouteImport } from './routes/help-support'
+import { Route as InfinitePracticeRouteImport } from './routes/infinite-practice'
+import { Route as LibraryRouteImport } from './routes/library'
+import { Route as MyDoubtsRouteImport } from './routes/my-doubts'
+import { Route as MyHistoryRouteImport } from './routes/my-history'
+import { Route as MyTestRouteImport } from './routes/my-test'
+import { Route as OnlineDegreeRouteImport } from './routes/online-degree'
+import { Route as PdfBankRouteImport } from './routes/pdf-bank'
+import { Route as PiRouteImport } from './routes/pi'
+import { Route as PiLensRouteImport } from './routes/pi-lens'
+import { Route as PowerBatchRouteImport } from './routes/power-batch'
+import { Route as PwBooksRouteImport } from './routes/pw-books'
+import { Route as PwCentresRouteImport } from './routes/pw-centres'
+import { Route as PwSaarthiRouteImport } from './routes/pw-saarthi'
+import { Route as PwStoreRouteImport } from './routes/pw-store'
+import { Route as PwTalkRouteImport } from './routes/pw-talk'
+import { Route as ReferEarnRouteImport } from './routes/refer-earn'
+import { Route as ScholarshipRouteImport } from './routes/scholarship'
+import { Route as TestSeriesRouteImport } from './routes/test-series'
+import { Route as UpskillingRouteImport } from './routes/upskilling'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AllClassesRoute = AllClassesRouteImport.update({
+  id: '/all-classes',
+  path: '/all-classes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AllTestsRoute = AllTestsRouteImport.update({
+  id: '/all-tests',
+  path: '/all-tests',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BatchesRoute = BatchesRouteImport.update({
+  id: '/batches',
+  path: '/batches',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BattlegroundsRoute = BattlegroundsRouteImport.update({
+  id: '/battlegrounds',
+  path: '/battlegrounds',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookmarksRoute = BookmarksRouteImport.update({
+  id: '/bookmarks',
+  path: '/bookmarks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChaptersRoute = ChaptersRouteImport.update({
+  id: '/chapters',
+  path: '/chapters',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DishaRoute = DishaRouteImport.update({
+  id: '/disha',
+  path: '/disha',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HelpSupportRoute = HelpSupportRouteImport.update({
+  id: '/help-support',
+  path: '/help-support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InfinitePracticeRoute = InfinitePracticeRouteImport.update({
+  id: '/infinite-practice',
+  path: '/infinite-practice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LibraryRoute = LibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyDoubtsRoute = MyDoubtsRouteImport.update({
+  id: '/my-doubts',
+  path: '/my-doubts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyHistoryRoute = MyHistoryRouteImport.update({
+  id: '/my-history',
+  path: '/my-history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyTestRoute = MyTestRouteImport.update({
+  id: '/my-test',
+  path: '/my-test',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnlineDegreeRoute = OnlineDegreeRouteImport.update({
+  id: '/online-degree',
+  path: '/online-degree',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PdfBankRoute = PdfBankRouteImport.update({
+  id: '/pdf-bank',
+  path: '/pdf-bank',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PiRoute = PiRouteImport.update({
+  id: '/pi',
+  path: '/pi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PiLensRoute = PiLensRouteImport.update({
+  id: '/pi-lens',
+  path: '/pi-lens',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PowerBatchRoute = PowerBatchRouteImport.update({
+  id: '/power-batch',
+  path: '/power-batch',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PwBooksRoute = PwBooksRouteImport.update({
+  id: '/pw-books',
+  path: '/pw-books',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PwCentresRoute = PwCentresRouteImport.update({
+  id: '/pw-centres',
+  path: '/pw-centres',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PwSaarthiRoute = PwSaarthiRouteImport.update({
+  id: '/pw-saarthi',
+  path: '/pw-saarthi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PwStoreRoute = PwStoreRouteImport.update({
+  id: '/pw-store',
+  path: '/pw-store',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PwTalkRoute = PwTalkRouteImport.update({
+  id: '/pw-talk',
+  path: '/pw-talk',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReferEarnRoute = ReferEarnRouteImport.update({
+  id: '/refer-earn',
+  path: '/refer-earn',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ScholarshipRoute = ScholarshipRouteImport.update({
+  id: '/scholarship',
+  path: '/scholarship',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TestSeriesRoute = TestSeriesRouteImport.update({
+  id: '/test-series',
+  path: '/test-series',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UpskillingRoute = UpskillingRouteImport.update({
+  id: '/upskilling',
+  path: '/upskilling',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/all-classes': typeof AllClassesRoute
+  '/all-tests': typeof AllTestsRoute
+  '/batches': typeof BatchesRoute
+  '/battlegrounds': typeof BattlegroundsRoute
+  '/bookmarks': typeof BookmarksRoute
+  '/chapters': typeof ChaptersRoute
+  '/dashboard': typeof DashboardRoute
+  '/disha': typeof DishaRoute
+  '/help-support': typeof HelpSupportRoute
+  '/infinite-practice': typeof InfinitePracticeRoute
+  '/library': typeof LibraryRoute
+  '/my-doubts': typeof MyDoubtsRoute
+  '/my-history': typeof MyHistoryRoute
+  '/my-test': typeof MyTestRoute
+  '/online-degree': typeof OnlineDegreeRoute
+  '/pdf-bank': typeof PdfBankRoute
+  '/pi': typeof PiRoute
+  '/pi-lens': typeof PiLensRoute
+  '/power-batch': typeof PowerBatchRoute
+  '/pw-books': typeof PwBooksRoute
+  '/pw-centres': typeof PwCentresRoute
+  '/pw-saarthi': typeof PwSaarthiRoute
+  '/pw-store': typeof PwStoreRoute
+  '/pw-talk': typeof PwTalkRoute
+  '/refer-earn': typeof ReferEarnRoute
+  '/scholarship': typeof ScholarshipRoute
+  '/test-series': typeof TestSeriesRoute
+  '/upskilling': typeof UpskillingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/all-classes': typeof AllClassesRoute
+  '/all-tests': typeof AllTestsRoute
+  '/batches': typeof BatchesRoute
+  '/battlegrounds': typeof BattlegroundsRoute
+  '/bookmarks': typeof BookmarksRoute
+  '/chapters': typeof ChaptersRoute
+  '/dashboard': typeof DashboardRoute
+  '/disha': typeof DishaRoute
+  '/help-support': typeof HelpSupportRoute
+  '/infinite-practice': typeof InfinitePracticeRoute
+  '/library': typeof LibraryRoute
+  '/my-doubts': typeof MyDoubtsRoute
+  '/my-history': typeof MyHistoryRoute
+  '/my-test': typeof MyTestRoute
+  '/online-degree': typeof OnlineDegreeRoute
+  '/pdf-bank': typeof PdfBankRoute
+  '/pi': typeof PiRoute
+  '/pi-lens': typeof PiLensRoute
+  '/power-batch': typeof PowerBatchRoute
+  '/pw-books': typeof PwBooksRoute
+  '/pw-centres': typeof PwCentresRoute
+  '/pw-saarthi': typeof PwSaarthiRoute
+  '/pw-store': typeof PwStoreRoute
+  '/pw-talk': typeof PwTalkRoute
+  '/refer-earn': typeof ReferEarnRoute
+  '/scholarship': typeof ScholarshipRoute
+  '/test-series': typeof TestSeriesRoute
+  '/upskilling': typeof UpskillingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/all-classes': typeof AllClassesRoute
+  '/all-tests': typeof AllTestsRoute
+  '/batches': typeof BatchesRoute
+  '/battlegrounds': typeof BattlegroundsRoute
+  '/bookmarks': typeof BookmarksRoute
+  '/chapters': typeof ChaptersRoute
+  '/dashboard': typeof DashboardRoute
+  '/disha': typeof DishaRoute
+  '/help-support': typeof HelpSupportRoute
+  '/infinite-practice': typeof InfinitePracticeRoute
+  '/library': typeof LibraryRoute
+  '/my-doubts': typeof MyDoubtsRoute
+  '/my-history': typeof MyHistoryRoute
+  '/my-test': typeof MyTestRoute
+  '/online-degree': typeof OnlineDegreeRoute
+  '/pdf-bank': typeof PdfBankRoute
+  '/pi': typeof PiRoute
+  '/pi-lens': typeof PiLensRoute
+  '/power-batch': typeof PowerBatchRoute
+  '/pw-books': typeof PwBooksRoute
+  '/pw-centres': typeof PwCentresRoute
+  '/pw-saarthi': typeof PwSaarthiRoute
+  '/pw-store': typeof PwStoreRoute
+  '/pw-talk': typeof PwTalkRoute
+  '/refer-earn': typeof ReferEarnRoute
+  '/scholarship': typeof ScholarshipRoute
+  '/test-series': typeof TestSeriesRoute
+  '/upskilling': typeof UpskillingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/all-classes'
+    | '/all-tests'
+    | '/batches'
+    | '/battlegrounds'
+    | '/bookmarks'
+    | '/chapters'
+    | '/dashboard'
+    | '/disha'
+    | '/help-support'
+    | '/infinite-practice'
+    | '/library'
+    | '/my-doubts'
+    | '/my-history'
+    | '/my-test'
+    | '/online-degree'
+    | '/pdf-bank'
+    | '/pi'
+    | '/pi-lens'
+    | '/power-batch'
+    | '/pw-books'
+    | '/pw-centres'
+    | '/pw-saarthi'
+    | '/pw-store'
+    | '/pw-talk'
+    | '/refer-earn'
+    | '/scholarship'
+    | '/test-series'
+    | '/upskilling'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/all-classes'
+    | '/all-tests'
+    | '/batches'
+    | '/battlegrounds'
+    | '/bookmarks'
+    | '/chapters'
+    | '/dashboard'
+    | '/disha'
+    | '/help-support'
+    | '/infinite-practice'
+    | '/library'
+    | '/my-doubts'
+    | '/my-history'
+    | '/my-test'
+    | '/online-degree'
+    | '/pdf-bank'
+    | '/pi'
+    | '/pi-lens'
+    | '/power-batch'
+    | '/pw-books'
+    | '/pw-centres'
+    | '/pw-saarthi'
+    | '/pw-store'
+    | '/pw-talk'
+    | '/refer-earn'
+    | '/scholarship'
+    | '/test-series'
+    | '/upskilling'
+  id:
+    | '__root__'
+    | '/'
+    | '/all-classes'
+    | '/all-tests'
+    | '/batches'
+    | '/battlegrounds'
+    | '/bookmarks'
+    | '/chapters'
+    | '/dashboard'
+    | '/disha'
+    | '/help-support'
+    | '/infinite-practice'
+    | '/library'
+    | '/my-doubts'
+    | '/my-history'
+    | '/my-test'
+    | '/online-degree'
+    | '/pdf-bank'
+    | '/pi'
+    | '/pi-lens'
+    | '/power-batch'
+    | '/pw-books'
+    | '/pw-centres'
+    | '/pw-saarthi'
+    | '/pw-store'
+    | '/pw-talk'
+    | '/refer-earn'
+    | '/scholarship'
+    | '/test-series'
+    | '/upskilling'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AllClassesRoute: typeof AllClassesRoute
+  AllTestsRoute: typeof AllTestsRoute
+  BatchesRoute: typeof BatchesRoute
+  BattlegroundsRoute: typeof BattlegroundsRoute
+  BookmarksRoute: typeof BookmarksRoute
+  ChaptersRoute: typeof ChaptersRoute
+  DashboardRoute: typeof DashboardRoute
+  DishaRoute: typeof DishaRoute
+  HelpSupportRoute: typeof HelpSupportRoute
+  InfinitePracticeRoute: typeof InfinitePracticeRoute
+  LibraryRoute: typeof LibraryRoute
+  MyDoubtsRoute: typeof MyDoubtsRoute
+  MyHistoryRoute: typeof MyHistoryRoute
+  MyTestRoute: typeof MyTestRoute
+  OnlineDegreeRoute: typeof OnlineDegreeRoute
+  PdfBankRoute: typeof PdfBankRoute
+  PiRoute: typeof PiRoute
+  PiLensRoute: typeof PiLensRoute
+  PowerBatchRoute: typeof PowerBatchRoute
+  PwBooksRoute: typeof PwBooksRoute
+  PwCentresRoute: typeof PwCentresRoute
+  PwSaarthiRoute: typeof PwSaarthiRoute
+  PwStoreRoute: typeof PwStoreRoute
+  PwTalkRoute: typeof PwTalkRoute
+  ReferEarnRoute: typeof ReferEarnRoute
+  ScholarshipRoute: typeof ScholarshipRoute
+  TestSeriesRoute: typeof TestSeriesRoute
+  UpskillingRoute: typeof UpskillingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +416,235 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/all-classes': {
+      id: '/all-classes'
+      path: '/all-classes'
+      fullPath: '/all-classes'
+      preLoaderRoute: typeof AllClassesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/all-tests': {
+      id: '/all-tests'
+      path: '/all-tests'
+      fullPath: '/all-tests'
+      preLoaderRoute: typeof AllTestsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/batches': {
+      id: '/batches'
+      path: '/batches'
+      fullPath: '/batches'
+      preLoaderRoute: typeof BatchesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/battlegrounds': {
+      id: '/battlegrounds'
+      path: '/battlegrounds'
+      fullPath: '/battlegrounds'
+      preLoaderRoute: typeof BattlegroundsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bookmarks': {
+      id: '/bookmarks'
+      path: '/bookmarks'
+      fullPath: '/bookmarks'
+      preLoaderRoute: typeof BookmarksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chapters': {
+      id: '/chapters'
+      path: '/chapters'
+      fullPath: '/chapters'
+      preLoaderRoute: typeof ChaptersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/disha': {
+      id: '/disha'
+      path: '/disha'
+      fullPath: '/disha'
+      preLoaderRoute: typeof DishaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/help-support': {
+      id: '/help-support'
+      path: '/help-support'
+      fullPath: '/help-support'
+      preLoaderRoute: typeof HelpSupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/infinite-practice': {
+      id: '/infinite-practice'
+      path: '/infinite-practice'
+      fullPath: '/infinite-practice'
+      preLoaderRoute: typeof InfinitePracticeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/library': {
+      id: '/library'
+      path: '/library'
+      fullPath: '/library'
+      preLoaderRoute: typeof LibraryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-doubts': {
+      id: '/my-doubts'
+      path: '/my-doubts'
+      fullPath: '/my-doubts'
+      preLoaderRoute: typeof MyDoubtsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-history': {
+      id: '/my-history'
+      path: '/my-history'
+      fullPath: '/my-history'
+      preLoaderRoute: typeof MyHistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-test': {
+      id: '/my-test'
+      path: '/my-test'
+      fullPath: '/my-test'
+      preLoaderRoute: typeof MyTestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/online-degree': {
+      id: '/online-degree'
+      path: '/online-degree'
+      fullPath: '/online-degree'
+      preLoaderRoute: typeof OnlineDegreeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pdf-bank': {
+      id: '/pdf-bank'
+      path: '/pdf-bank'
+      fullPath: '/pdf-bank'
+      preLoaderRoute: typeof PdfBankRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pi': {
+      id: '/pi'
+      path: '/pi'
+      fullPath: '/pi'
+      preLoaderRoute: typeof PiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pi-lens': {
+      id: '/pi-lens'
+      path: '/pi-lens'
+      fullPath: '/pi-lens'
+      preLoaderRoute: typeof PiLensRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/power-batch': {
+      id: '/power-batch'
+      path: '/power-batch'
+      fullPath: '/power-batch'
+      preLoaderRoute: typeof PowerBatchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pw-books': {
+      id: '/pw-books'
+      path: '/pw-books'
+      fullPath: '/pw-books'
+      preLoaderRoute: typeof PwBooksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pw-centres': {
+      id: '/pw-centres'
+      path: '/pw-centres'
+      fullPath: '/pw-centres'
+      preLoaderRoute: typeof PwCentresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pw-saarthi': {
+      id: '/pw-saarthi'
+      path: '/pw-saarthi'
+      fullPath: '/pw-saarthi'
+      preLoaderRoute: typeof PwSaarthiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pw-store': {
+      id: '/pw-store'
+      path: '/pw-store'
+      fullPath: '/pw-store'
+      preLoaderRoute: typeof PwStoreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pw-talk': {
+      id: '/pw-talk'
+      path: '/pw-talk'
+      fullPath: '/pw-talk'
+      preLoaderRoute: typeof PwTalkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refer-earn': {
+      id: '/refer-earn'
+      path: '/refer-earn'
+      fullPath: '/refer-earn'
+      preLoaderRoute: typeof ReferEarnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scholarship': {
+      id: '/scholarship'
+      path: '/scholarship'
+      fullPath: '/scholarship'
+      preLoaderRoute: typeof ScholarshipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/test-series': {
+      id: '/test-series'
+      path: '/test-series'
+      fullPath: '/test-series'
+      preLoaderRoute: typeof TestSeriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/upskilling': {
+      id: '/upskilling'
+      path: '/upskilling'
+      fullPath: '/upskilling'
+      preLoaderRoute: typeof UpskillingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AllClassesRoute: AllClassesRoute,
+  AllTestsRoute: AllTestsRoute,
+  BatchesRoute: BatchesRoute,
+  BattlegroundsRoute: BattlegroundsRoute,
+  BookmarksRoute: BookmarksRoute,
+  ChaptersRoute: ChaptersRoute,
+  DashboardRoute: DashboardRoute,
+  DishaRoute: DishaRoute,
+  HelpSupportRoute: HelpSupportRoute,
+  InfinitePracticeRoute: InfinitePracticeRoute,
+  LibraryRoute: LibraryRoute,
+  MyDoubtsRoute: MyDoubtsRoute,
+  MyHistoryRoute: MyHistoryRoute,
+  MyTestRoute: MyTestRoute,
+  OnlineDegreeRoute: OnlineDegreeRoute,
+  PdfBankRoute: PdfBankRoute,
+  PiRoute: PiRoute,
+  PiLensRoute: PiLensRoute,
+  PowerBatchRoute: PowerBatchRoute,
+  PwBooksRoute: PwBooksRoute,
+  PwCentresRoute: PwCentresRoute,
+  PwSaarthiRoute: PwSaarthiRoute,
+  PwStoreRoute: PwStoreRoute,
+  PwTalkRoute: PwTalkRoute,
+  ReferEarnRoute: ReferEarnRoute,
+  ScholarshipRoute: ScholarshipRoute,
+  TestSeriesRoute: TestSeriesRoute,
+  UpskillingRoute: UpskillingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
