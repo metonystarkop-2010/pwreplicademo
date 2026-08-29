@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Sidebar } from "./Sidebar";
-import { TopBar } from "./TopBar";
+import { TopBar, type CourseChip } from "./TopBar";
 import { HelperBubble } from "./HelperBubble";
 
 export function AppShell({
@@ -8,7 +8,7 @@ export function AppShell({
   courseChip,
 }: {
   children: ReactNode;
-  courseChip?: { label: string; emoji?: string };
+  courseChip?: CourseChip | undefined;
 }) {
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-surface">

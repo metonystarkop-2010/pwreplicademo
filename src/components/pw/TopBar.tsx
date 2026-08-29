@@ -2,11 +2,9 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { PwLogo } from "./PwLogo";
 
-export function TopBar({
-  courseChip,
-}: {
-  courseChip?: { label: string; emoji?: string };
-}) {
+export type CourseChip = { label: string; emoji?: string | undefined };
+
+export function TopBar({ courseChip }: { courseChip?: CourseChip | undefined }) {
   return (
     <header className="flex h-[56px] shrink-0 items-center gap-4 bg-topbar px-5 text-topbar-foreground">
       <Link to="/" className="flex items-center gap-2.5">
