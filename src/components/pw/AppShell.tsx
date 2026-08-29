@@ -10,7 +10,7 @@ export function AppShell({
   courseChip?: CourseChip | undefined;
 }) {
   return (
-    <div className="flex h-screen flex-col overflow-hidden bg-surface">
+    <div className="flex h-[calc(100vh/0.85)] flex-col overflow-hidden bg-surface">
       <TopBar courseChip={courseChip} />
       <div className="flex min-h-0 flex-1">
         <Sidebar className="hidden md:block" />
