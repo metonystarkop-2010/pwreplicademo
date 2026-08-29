@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AllClassesRouteImport } from './routes/all-classes'
+import { Route as BatchesRouteImport } from './routes/batches'
+import { Route as ChaptersRouteImport } from './routes/chapters'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AllClassesRoute = AllClassesRouteImport.update({
+  id: '/all-classes',
+  path: '/all-classes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BatchesRoute = BatchesRouteImport.update({
+  id: '/batches',
+  path: '/batches',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChaptersRoute = ChaptersRouteImport.update({
+  id: '/chapters',
+  path: '/chapters',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/all-classes': typeof AllClassesRoute
+  '/batches': typeof BatchesRoute
+  '/chapters': typeof ChaptersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/all-classes': typeof AllClassesRoute
+  '/batches': typeof BatchesRoute
+  '/chapters': typeof ChaptersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/all-classes': typeof AllClassesRoute
+  '/batches': typeof BatchesRoute
+  '/chapters': typeof ChaptersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/all-classes' | '/batches' | '/chapters'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/all-classes' | '/batches' | '/chapters'
+  id: '__root__' | '/' | '/all-classes' | '/batches' | '/chapters'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AllClassesRoute: typeof AllClassesRoute
+  BatchesRoute: typeof BatchesRoute
+  ChaptersRoute: typeof ChaptersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/all-classes': {
+      id: '/all-classes'
+      path: '/all-classes'
+      fullPath: '/all-classes'
+      preLoaderRoute: typeof AllClassesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/batches': {
+      id: '/batches'
+      path: '/batches'
+      fullPath: '/batches'
+      preLoaderRoute: typeof BatchesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chapters': {
+      id: '/chapters'
+      path: '/chapters'
+      fullPath: '/chapters'
+      preLoaderRoute: typeof ChaptersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AllClassesRoute: AllClassesRoute,
+  BatchesRoute: BatchesRoute,
+  ChaptersRoute: ChaptersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
