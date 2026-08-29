@@ -34,7 +34,7 @@ function AllClassesPage() {
   const [noticeOpen, setNoticeOpen] = useState(true);
 
   return (
-    <AppShell courseChip={{ label: "Your Course", emoji: "📘" }}>
+    <AppShell courseChip={{ label: "Your Course" }}>
       <PageHeader title="All Classes" backTo="/" search={{ placeholder: "Search for DPPs" }}>
         <XpPill />
       </PageHeader>

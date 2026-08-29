@@ -17,7 +17,7 @@ export function OfferingTile({
       className="flex items-center gap-4 rounded-2xl bg-card px-6 py-[26px] shadow-card transition-shadow hover:shadow-raised"
     >
       <span className="grid size-8 shrink-0 place-items-center">{icon}</span>
-      <span className="text-[19px] font-bold tracking-[-0.01em] text-foreground">{label}</span>
+      <span className="whitespace-nowrap text-[19px] font-bold tracking-[-0.01em] text-foreground">{label}</span>
       <ChevronRight className="ml-auto size-5 text-muted-foreground" strokeWidth={2.2} />
     </Link>
   );

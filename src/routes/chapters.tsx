@@ -33,7 +33,7 @@ function ChaptersPage() {
   const [dppFilter, setDppFilter] = useState<"PENDING" | "COMPLETED">("PENDING");
 
   return (
-    <AppShell courseChip={{ label: "Your Course", emoji: "📘" }}>
+    <AppShell courseChip={{ label: "Your Course" }}>
       <PageHeader title="All Classes" backTo="/all-classes">
         <XpPill />
       </PageHeader>
