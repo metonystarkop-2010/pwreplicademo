@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { Sidebar } from "./Sidebar";
 import { TopBar, type CourseChip } from "./TopBar";
-import { HelperBubble } from "./HelperBubble";
 
 export function AppShell({
   children,
@@ -17,7 +16,6 @@ export function AppShell({
         <Sidebar className="hidden md:block" />
         <main className="scrollbar-slim relative min-w-0 flex-1 overflow-y-auto">
           {children}
-          <HelperBubble />
         </main>
       </div>
     </div>
