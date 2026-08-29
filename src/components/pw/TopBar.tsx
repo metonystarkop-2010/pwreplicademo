@@ -51,8 +51,8 @@ export function TopBar({ courseChip }: { courseChip?: CourseChip | undefined }) 
 
         <button type="button" className="flex items-center gap-2.5">
           <span className="text-[15px] font-bold">Hi, Student</span>
-          <span className="grid size-9 place-items-center overflow-hidden rounded-full bg-secondary text-[13px] font-bold text-secondary-foreground">
-            S
+          <span className="grid size-9 place-items-center overflow-hidden rounded-full bg-secondary">
+            <img src={studentAvatar} alt="Student profile" className="size-9 object-cover" />
           </span>
           <ChevronDown className="size-4 text-muted-foreground" strokeWidth={2.4} />
         </button>
