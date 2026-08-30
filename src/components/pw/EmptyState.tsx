@@ -6,8 +6,8 @@ export function ContentOnTheWay({
   subtitle?: string;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center px-6 py-24 text-center">
-      <svg viewBox="0 0 200 180" className="w-[190px]" aria-hidden="true">
+    <div className="flex flex-col items-center justify-center px-6 py-16 sm:py-20 text-center">
+      <svg viewBox="0 0 200 180" className="w-[150px] sm:w-[180px]" aria-hidden="true">
         <circle cx="100" cy="88" r="62" fill="oklch(0.93 0.04 250)" />
         <rect x="58" y="44" width="70" height="92" rx="6" fill="oklch(0.99 0 0)" />
         <rect
@@ -54,7 +54,7 @@ export function ContentOnTheWay({
           strokeLinecap="round"
         />
       </svg>
-      <h3 className="mt-7 text-[24px] font-bold tracking-[-0.01em] text-foreground">{title}</h3>
+      <h3 className="mt-7 text-[20px] font-bold sm:text-[22px] tracking-[-0.01em] text-foreground">{title}</h3>
       <p className="mt-2 text-[16px] text-foreground/80">{subtitle}</p>
     </div>
   );
@@ -69,7 +69,7 @@ export function NothingScheduled({
 }) {
   return (
     <div className="flex flex-col items-center justify-center px-6 py-16 text-center">
-      <svg viewBox="0 0 200 160" className="w-[170px]" aria-hidden="true">
+      <svg viewBox="0 0 200 160" className="w-[140px] sm:w-[165px]" aria-hidden="true">
         <path d="M40 96c-14-6-22-18-14-28 6-8 20-8 28 0Z" fill="oklch(0.82 0.13 60)" />
         <path d="M44 108c-16 0-28-8-26-20 2-10 16-14 26-8Z" fill="oklch(0.8 0.12 320)" />
         <circle

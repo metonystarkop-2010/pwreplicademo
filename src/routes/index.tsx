@@ -44,9 +44,9 @@ function StudyPage() {
 
       <BatchBanner />
 
-      <section className="px-8 pt-9">
-        <h2 className="text-[26px] font-bold tracking-[-0.01em] text-foreground">Batch Offerings</h2>
-        <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <section className="px-4 pt-8 sm:px-6 lg:px-8">
+        <h2 className="text-[20px] font-bold tracking-[-0.01em] text-foreground sm:text-[23px]">Batch Offerings</h2>
+        <div className="mt-5 grid gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3 2xl:grid-cols-4">
           <OfferingTile label="All Classes" icon={<PlayIcon />} to="/all-classes" />
           <OfferingTile label="All Tests" icon={<TestIcon />} to="/all-tests" />
           <OfferingTile label="My Doubts" icon={<DoubtIcon />} to="/my-doubts" />
@@ -59,11 +59,11 @@ function StudyPage() {
         </div>
       </section>
 
-      <section className="mt-12 px-8">
-        <h2 className="text-[26px] font-bold tracking-[-0.01em] text-foreground">
+      <section className="mt-10 px-4 sm:px-6 lg:px-8">
+        <h2 className="text-[20px] font-bold tracking-[-0.01em] text-foreground sm:text-[23px]">
           Upcoming Events (0)
         </h2>
-        <div className="mt-6 rounded-2xl bg-card shadow-card">
+        <div className="mt-5 rounded-2xl border border-border/60 bg-card shadow-card">
           <NothingScheduled />
         </div>
       </section>

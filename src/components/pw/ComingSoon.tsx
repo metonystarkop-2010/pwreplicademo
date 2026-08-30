@@ -1,7 +1,7 @@
 export function ComingSoon({ screen }: { screen: string }) {
   return (
-    <div className="flex min-h-[calc(100vh-118px)] flex-col items-center justify-center px-6 text-center">
-      <svg viewBox="0 0 200 150" className="w-[200px]" aria-hidden="true">
+    <div className="flex min-h-[60vh] flex-col items-center justify-center px-6 text-center">
+      <svg viewBox="0 0 200 150" className="w-[160px] sm:w-[190px]" aria-hidden="true">
         <circle cx="100" cy="72" r="56" fill="oklch(0.95 0.03 290)" />
         <rect x="52" y="52" width="96" height="62" rx="10" fill="oklch(0.99 0 0)" />
         <rect
@@ -42,7 +42,7 @@ export function ComingSoon({ screen }: { screen: string }) {
         <span className="size-2 animate-pulse rounded-full bg-tag-foreground" />
         WORKING
       </span>
-      <h2 className="mt-4 text-[30px] font-extrabold tracking-[-0.02em] text-foreground">
+      <h2 className="mt-4 text-[24px] font-extrabold sm:text-[28px] tracking-[-0.02em] text-foreground">
         COMING SOON
       </h2>
       <p className="mt-3 max-w-md text-[15px] text-muted-foreground">
