@@ -38,16 +38,16 @@ function ChaptersPage() {
         <XpPill />
       </PageHeader>
 
-      <div className="px-8 py-6">
-        <div className="grid gap-0 overflow-hidden rounded-2xl bg-card shadow-card lg:grid-cols-[380px_1fr]">
-          <div className="border-b border-border p-7 lg:border-b-0 lg:border-r">
+      <div className="px-4 py-5 sm:px-6 lg:px-8">
+        <div className="grid gap-0 overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card lg:grid-cols-[320px_1fr] xl:grid-cols-[380px_1fr]">
+          <div className="border-b border-border p-5 sm:p-6 lg:border-b-0 lg:border-r">
             <p className="text-[15px] font-bold tracking-[0.04em] text-foreground">ALL CHAPTERS</p>
             <div className="mt-5 rounded-xl border border-dashed border-border px-4 py-6 text-[14.5px] text-muted-foreground">
               Chapters will be listed here
             </div>
           </div>
 
-          <div className="min-w-0 p-7">
+          <div className="min-w-0 p-5 sm:p-6">
             <div className="scrollbar-slim flex gap-8 overflow-x-auto border-b border-border">
               {contentTabs.map((t) => (
                 <button
@@ -55,7 +55,7 @@ function ChaptersPage() {
                   type="button"
                   onClick={() => setTab(t)}
                   className={cn(
-                    "relative whitespace-nowrap pb-3 text-[17px] font-semibold transition-colors",
+                    "relative whitespace-nowrap pb-3 text-[15px] font-semibold sm:text-[16px] transition-colors",
                     tab === t ? "text-primary" : "text-muted-foreground hover:text-foreground",
                   )}
                 >

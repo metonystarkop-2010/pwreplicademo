@@ -28,8 +28,8 @@ function BatchesPage() {
   return (
     <AppShell>
       <PageHeader title="Batches" search={{ placeholder: "Search for batches..." }} />
-      <div className="px-8 py-6">
-        <div className="rounded-2xl bg-card shadow-card">
+      <div className="px-4 py-5 sm:px-6 lg:px-8">
+        <div className="rounded-2xl border border-border/60 bg-card shadow-card">
           <ContentOnTheWay
             title="No Batches Yet"
             subtitle="Batches you explore or enrol in will be listed right here."

@@ -80,29 +80,29 @@ export function StudyZone() {
   const visible = expanded ? cards : cards.slice(0, 3);
 
   return (
-    <section className="px-8 pb-16 pt-10">
-      <h2 className="text-[26px] font-bold tracking-[-0.01em] text-foreground">My Study Zone</h2>
+    <section className="px-4 pb-14 pt-9 sm:px-6 lg:px-8">
+      <h2 className="text-[20px] font-bold tracking-[-0.01em] text-foreground sm:text-[23px]">My Study Zone</h2>
 
-      <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="mt-5 grid gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">
         {visible.map((card) => {
           const Icon = card.icon;
           return (
             <Link
               key={card.title}
               to={card.to}
-              className="relative rounded-2xl bg-card px-8 py-7 shadow-card transition-shadow hover:shadow-raised"
+              className="group relative rounded-2xl border border-border/60 bg-card px-5 py-6 shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-raised sm:px-6"
             >
               {card.chevron && (
                 <ChevronRight
-                  className="absolute right-6 top-1/2 size-6 -translate-y-1/2 text-muted-foreground"
+                  className="absolute right-5 top-1/2 size-5 -translate-y-1/2 text-muted-foreground"
                   strokeWidth={2.2}
                 />
               )}
-              <Icon className="size-[34px] text-foreground" strokeWidth={1.5} />
-              <h3 className="mt-5 text-[21px] font-bold tracking-[-0.01em] text-foreground">
+              <Icon className="size-[30px] text-primary" strokeWidth={1.6} />
+              <h3 className="mt-4 text-[17.5px] font-bold tracking-[-0.01em] text-foreground">
                 {card.title}
               </h3>
-              <p className="mt-2 truncate pr-6 text-[15.5px] text-foreground/80">
+              <p className="mt-1.5 pr-6 text-[13.5px] leading-relaxed text-muted-foreground">
                 {card.description}
               </p>
             </Link>
@@ -110,11 +110,11 @@ export function StudyZone() {
         })}
       </div>
 
-      <div className="mt-9 flex justify-center">
+      <div className="mt-8 flex justify-center">
         <button
           type="button"
           onClick={() => setExpanded((v) => !v)}
-          className="flex items-center gap-2 text-[18px] font-semibold text-foreground underline underline-offset-4"
+          className="flex items-center gap-2 text-[15px] font-semibold text-foreground underline underline-offset-4 hover:text-primary"
         >
           {expanded ? "Show Less" : "Show More"}
           {expanded ? (

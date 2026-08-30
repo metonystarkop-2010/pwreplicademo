@@ -14,11 +14,11 @@ export function OfferingTile({
   return (
     <Link
       to={to}
-      className="flex items-center gap-4 rounded-2xl bg-card px-6 py-[26px] shadow-card transition-shadow hover:shadow-raised"
+      className="group flex items-center gap-3.5 rounded-2xl border border-border/60 bg-card px-5 py-5 shadow-card transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-raised sm:px-6"
     >
       <span className="grid size-8 shrink-0 place-items-center">{icon}</span>
-      <span className="whitespace-nowrap text-[19px] font-bold tracking-[-0.01em] text-foreground">{label}</span>
-      <ChevronRight className="ml-auto size-5 text-muted-foreground" strokeWidth={2.2} />
+      <span className="min-w-0 truncate text-[16px] font-bold tracking-[-0.01em] text-foreground sm:text-[17.5px]">{label}</span>
+      <ChevronRight className="ml-auto size-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" strokeWidth={2.2} />
     </Link>
   );
 }

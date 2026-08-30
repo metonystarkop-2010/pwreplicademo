@@ -40,14 +40,14 @@ function AllClassesPage() {
       </PageHeader>
 
       <div className="bg-card">
-        <div className="flex gap-8 px-8">
+        <div className="scrollbar-slim flex gap-6 overflow-x-auto px-4 sm:gap-8 sm:px-6 lg:px-8">
           {tabs.map((t) => (
             <button
               key={t}
               type="button"
               onClick={() => setTab(t)}
               className={cn(
-                "relative py-4 text-[17px] font-semibold transition-colors",
+                "relative py-3.5 text-[15px] font-semibold sm:text-[16px] transition-colors",
                 tab === t ? "text-primary" : "text-muted-foreground hover:text-foreground",
               )}
             >
@@ -61,16 +61,16 @@ function AllClassesPage() {
       </div>
 
       {noticeOpen && (
-        <div className="flex items-center justify-between bg-notice px-8 py-4 text-notice-foreground">
-          <p className="text-[16px]">Completion % depends on lecture and DPP progress!</p>
+        <div className="flex items-center justify-between bg-notice px-4 py-3 sm:px-6 lg:px-8 text-notice-foreground">
+          <p className="text-[13.5px] sm:text-[15px]">Completion % depends on lecture and DPP progress!</p>
           <button type="button" aria-label="Dismiss" onClick={() => setNoticeOpen(false)}>
             <X className="size-5" strokeWidth={2} />
           </button>
         </div>
       )}
 
-      <div className="px-8 py-8">
-        <div className="rounded-2xl bg-card shadow-card">
+      <div className="px-4 py-6 sm:px-6 lg:px-8">
+        <div className="rounded-2xl border border-border/60 bg-card shadow-card">
           <ContentOnTheWay
             title={tab === "Subjects" ? "Subjects on the Way" : "Resources on the Way"}
             subtitle="Nothing here for now.... but it won't be for long!"

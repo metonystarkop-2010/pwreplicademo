@@ -4,8 +4,8 @@ import type { ReactNode } from "react";
 
 export function XpPill({ value = 0 }: { value?: number }) {
   return (
-    <span className="flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5">
-      <svg viewBox="0 0 24 24" className="size-6" aria-hidden="true">
+    <span className="flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-card px-2.5 py-1.5">
+      <svg viewBox="0 0 24 24" className="size-5 sm:size-6" aria-hidden="true">
         <path
           d="M12 2.5 20 7v10l-8 4.5L4 17V7l8-4.5Z"
           fill="oklch(0.9 0.05 260)"
@@ -23,23 +23,27 @@ export function XpPill({ value = 0 }: { value?: number }) {
           XP
         </text>
       </svg>
-      <span className="text-[20px] font-bold leading-none text-foreground">{value}</span>
+      <span className="text-[16px] font-bold leading-none text-foreground sm:text-[18px]">
+        {value}
+      </span>
     </span>
   );
 }
 
 export function StreakPill({ value = 0 }: { value?: number }) {
   return (
-    <span className="flex items-center gap-2">
-      <span className="grid size-9 place-items-center rounded-full bg-secondary">
-        <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
+    <span className="flex shrink-0 items-center gap-1.5">
+      <span className="grid size-8 place-items-center rounded-full bg-secondary">
+        <svg viewBox="0 0 24 24" className="size-[18px]" aria-hidden="true">
           <path
             d="M13 2c1 4-3 5-3 8a3 3 0 0 0 6 0c2 2 3 4 3 6a7 7 0 0 1-14 0c0-6 6-8 8-14Z"
             fill="oklch(0.62 0.02 265)"
           />
         </svg>
       </span>
-      <span className="text-[20px] font-bold leading-none text-foreground">{value}</span>
+      <span className="text-[16px] font-bold leading-none text-foreground sm:text-[18px]">
+        {value}
+      </span>
     </span>
   );
 }
@@ -56,27 +60,50 @@ export function PageHeader({
   children?: ReactNode;
 }) {
   return (
-    <div className="sticky top-0 z-20 flex h-[62px] items-center gap-4 border-b border-border bg-card px-7">
-      {backTo && (
-        <Link to={backTo} aria-label="Go back" className="text-foreground">
-          <ArrowLeft className="size-[22px]" strokeWidth={2} />
-        </Link>
-      )}
-      <h1 className="text-[21px] font-bold tracking-[-0.01em] text-foreground">{title}</h1>
+    <div className="sticky top-0 z-20 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
+      <div className="flex min-h-[58px] items-center gap-3 px-4 py-2.5 sm:px-6 lg:px-8">
+        {backTo && (
+          <Link to={backTo} aria-label="Go back" className="shrink-0 text-foreground">
+            <ArrowLeft className="size-[21px]" strokeWidth={2} />
+          </Link>
+        )}
+        <h1 className="min-w-0 truncate text-[18px] font-bold tracking-[-0.01em] text-foreground sm:text-[20px]">
+          {title}
+        </h1>
 
-      <div className="ml-auto flex items-center gap-5">
         {search && (
-          <label className="flex h-11 w-[330px] items-center gap-3 rounded-xl border border-border px-4">
-            <Search className="size-[18px] text-muted-foreground" strokeWidth={2} />
+          <label className="ml-auto hidden h-10 w-full max-w-[320px] items-center gap-2.5 rounded-xl border border-border bg-background px-3.5 transition-colors focus-within:border-primary md:flex">
+            <Search className="size-[17px] shrink-0 text-muted-foreground" strokeWidth={2} />
             <input
               type="search"
               placeholder={search.placeholder}
-              className="w-full bg-transparent text-[14.5px] text-foreground outline-none placeholder:text-muted-foreground"
+              className="w-full bg-transparent text-[14px] text-foreground outline-none placeholder:text-muted-foreground"
             />
           </label>
         )}
-        {children}
+
+        {children && (
+          <div
+            className={`flex shrink-0 items-center gap-3 sm:gap-4 ${search ? "md:ml-4" : "ml-auto"}`}
+          >
+            {children}
+          </div>
+        )}
+        {search && !children && <span className="ml-auto md:hidden" />}
       </div>
+
+      {search && (
+        <div className="px-4 pb-3 sm:px-6 md:hidden">
+          <label className="flex h-10 items-center gap-2.5 rounded-xl border border-border bg-background px-3.5 focus-within:border-primary">
+            <Search className="size-[17px] shrink-0 text-muted-foreground" strokeWidth={2} />
+            <input
+              type="search"
+              placeholder={search.placeholder}
+              className="w-full bg-transparent text-[14px] text-foreground outline-none placeholder:text-muted-foreground"
+            />
+          </label>
+        </div>
+      )}
     </div>
   );
 }
@@ -84,11 +111,11 @@ export function PageHeader({
 export function StudyHeaderWidgets() {
   return (
     <>
-      <Gift className="size-[26px] text-foreground" strokeWidth={1.6} />
+      <Gift className="hidden size-[23px] shrink-0 text-foreground sm:block" strokeWidth={1.6} />
       <StreakPill />
       <XpPill />
-      <span className="relative">
-        <Bell className="size-[26px] text-foreground" strokeWidth={1.7} />
+      <span className="relative shrink-0">
+        <Bell className="size-[23px] text-foreground" strokeWidth={1.7} />
         <span className="absolute right-0 top-0 size-2 rounded-full bg-destructive" />
       </span>
     </>

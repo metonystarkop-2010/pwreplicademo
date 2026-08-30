@@ -158,8 +158,6 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    /* Slightly reduced interface scale so more of each screen is visible */
-    zoom: 0.85;
   }
 }
 
