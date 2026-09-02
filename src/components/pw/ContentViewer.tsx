@@ -29,7 +29,7 @@ export function ContentViewer({
 
         <div className="scrollbar-slim min-h-0 flex-1 overflow-y-auto p-3 sm:p-5">
           {target.videoUrl ? (
-            <HlsPlayer src={target.videoUrl} poster={target.thumbnail || undefined} />
+            <HlsPlayer src={target.videoUrl} poster={target.thumbnail} />
           ) : target.pdfUrl ? (
             <iframe
               src={target.pdfUrl}
