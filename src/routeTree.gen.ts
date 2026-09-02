@@ -40,6 +40,7 @@ import { Route as TestSeriesRouteImport } from './routes/test-series'
 import { Route as UpskillingRouteImport } from './routes/upskilling'
 import { Route as BatchesIndexRouteImport } from './routes/batches.index'
 import { Route as BatchesBatchIdRouteImport } from './routes/batches.$batchId'
+import { Route as BatchesBatchIdIndexRouteImport } from './routes/batches.$batchId.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -196,6 +197,11 @@ const BatchesBatchIdRoute = BatchesBatchIdRouteImport.update({
   path: '/$batchId',
   getParentRoute: () => BatchesRoute,
 } as any)
+const BatchesBatchIdIndexRoute = BatchesBatchIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BatchesBatchIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -227,8 +233,9 @@ export interface FileRoutesByFullPath {
   '/scholarship': typeof ScholarshipRoute
   '/test-series': typeof TestSeriesRoute
   '/upskilling': typeof UpskillingRoute
-  '/batches/$batchId': typeof BatchesBatchIdRoute
+  '/batches/$batchId': typeof BatchesBatchIdRouteWithChildren
   '/batches/': typeof BatchesIndexRoute
+  '/batches/$batchId/': typeof BatchesBatchIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -259,8 +266,8 @@ export interface FileRoutesByTo {
   '/scholarship': typeof ScholarshipRoute
   '/test-series': typeof TestSeriesRoute
   '/upskilling': typeof UpskillingRoute
-  '/batches/$batchId': typeof BatchesBatchIdRoute
   '/batches': typeof BatchesIndexRoute
+  '/batches/$batchId': typeof BatchesBatchIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -293,8 +300,9 @@ export interface FileRoutesById {
   '/scholarship': typeof ScholarshipRoute
   '/test-series': typeof TestSeriesRoute
   '/upskilling': typeof UpskillingRoute
-  '/batches/$batchId': typeof BatchesBatchIdRoute
+  '/batches/$batchId': typeof BatchesBatchIdRouteWithChildren
   '/batches/': typeof BatchesIndexRoute
+  '/batches/$batchId/': typeof BatchesBatchIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -330,6 +338,7 @@ export interface FileRouteTypes {
     | '/upskilling'
     | '/batches/$batchId'
     | '/batches/'
+    | '/batches/$batchId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -360,8 +369,8 @@ export interface FileRouteTypes {
     | '/scholarship'
     | '/test-series'
     | '/upskilling'
-    | '/batches/$batchId'
     | '/batches'
+    | '/batches/$batchId'
   id:
     | '__root__'
     | '/'
@@ -395,6 +404,7 @@ export interface FileRouteTypes {
     | '/upskilling'
     | '/batches/$batchId'
     | '/batches/'
+    | '/batches/$batchId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -648,16 +658,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BatchesBatchIdRouteImport
       parentRoute: typeof BatchesRoute
     }
+    '/batches/$batchId/': {
+      id: '/batches/$batchId/'
+      path: '/'
+      fullPath: '/batches/$batchId/'
+      preLoaderRoute: typeof BatchesBatchIdIndexRouteImport
+      parentRoute: typeof BatchesBatchIdRoute
+    }
   }
 }
 
+interface BatchesBatchIdRouteChildren {
+  BatchesBatchIdIndexRoute: typeof BatchesBatchIdIndexRoute
+}
+
+const BatchesBatchIdRouteChildren: BatchesBatchIdRouteChildren = {
+  BatchesBatchIdIndexRoute: BatchesBatchIdIndexRoute,
+}
+
+const BatchesBatchIdRouteWithChildren = BatchesBatchIdRoute._addFileChildren(
+  BatchesBatchIdRouteChildren,
+)
+
 interface BatchesRouteChildren {
-  BatchesBatchIdRoute: typeof BatchesBatchIdRoute
+  BatchesBatchIdRoute: typeof BatchesBatchIdRouteWithChildren
   BatchesIndexRoute: typeof BatchesIndexRoute
 }
 
 const BatchesRouteChildren: BatchesRouteChildren = {
-  BatchesBatchIdRoute: BatchesBatchIdRoute,
+  BatchesBatchIdRoute: BatchesBatchIdRouteWithChildren,
   BatchesIndexRoute: BatchesIndexRoute,
 }
 
