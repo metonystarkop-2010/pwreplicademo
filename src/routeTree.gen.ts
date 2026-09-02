@@ -38,6 +38,7 @@ import { Route as ReferEarnRouteImport } from './routes/refer-earn'
 import { Route as ScholarshipRouteImport } from './routes/scholarship'
 import { Route as TestSeriesRouteImport } from './routes/test-series'
 import { Route as UpskillingRouteImport } from './routes/upskilling'
+import { Route as BatchesIndexRouteImport } from './routes/batches.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -184,12 +185,17 @@ const UpskillingRoute = UpskillingRouteImport.update({
   path: '/upskilling',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BatchesIndexRoute = BatchesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BatchesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/all-classes': typeof AllClassesRoute
   '/all-tests': typeof AllTestsRoute
-  '/batches': typeof BatchesRoute
+  '/batches': typeof BatchesRouteWithChildren
   '/battlegrounds': typeof BattlegroundsRoute
   '/bookmarks': typeof BookmarksRoute
   '/chapters': typeof ChaptersRoute
@@ -215,12 +221,12 @@ export interface FileRoutesByFullPath {
   '/scholarship': typeof ScholarshipRoute
   '/test-series': typeof TestSeriesRoute
   '/upskilling': typeof UpskillingRoute
+  '/batches/': typeof BatchesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/all-classes': typeof AllClassesRoute
   '/all-tests': typeof AllTestsRoute
-  '/batches': typeof BatchesRoute
   '/battlegrounds': typeof BattlegroundsRoute
   '/bookmarks': typeof BookmarksRoute
   '/chapters': typeof ChaptersRoute
@@ -246,13 +252,14 @@ export interface FileRoutesByTo {
   '/scholarship': typeof ScholarshipRoute
   '/test-series': typeof TestSeriesRoute
   '/upskilling': typeof UpskillingRoute
+  '/batches': typeof BatchesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/all-classes': typeof AllClassesRoute
   '/all-tests': typeof AllTestsRoute
-  '/batches': typeof BatchesRoute
+  '/batches': typeof BatchesRouteWithChildren
   '/battlegrounds': typeof BattlegroundsRoute
   '/bookmarks': typeof BookmarksRoute
   '/chapters': typeof ChaptersRoute
@@ -278,6 +285,7 @@ export interface FileRoutesById {
   '/scholarship': typeof ScholarshipRoute
   '/test-series': typeof TestSeriesRoute
   '/upskilling': typeof UpskillingRoute
+  '/batches/': typeof BatchesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -311,12 +319,12 @@ export interface FileRouteTypes {
     | '/scholarship'
     | '/test-series'
     | '/upskilling'
+    | '/batches/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/all-classes'
     | '/all-tests'
-    | '/batches'
     | '/battlegrounds'
     | '/bookmarks'
     | '/chapters'
@@ -342,6 +350,7 @@ export interface FileRouteTypes {
     | '/scholarship'
     | '/test-series'
     | '/upskilling'
+    | '/batches'
   id:
     | '__root__'
     | '/'
@@ -373,13 +382,14 @@ export interface FileRouteTypes {
     | '/scholarship'
     | '/test-series'
     | '/upskilling'
+    | '/batches/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AllClassesRoute: typeof AllClassesRoute
   AllTestsRoute: typeof AllTestsRoute
-  BatchesRoute: typeof BatchesRoute
+  BatchesRoute: typeof BatchesRouteWithChildren
   BattlegroundsRoute: typeof BattlegroundsRoute
   BookmarksRoute: typeof BookmarksRoute
   ChaptersRoute: typeof ChaptersRoute
@@ -612,14 +622,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UpskillingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/batches/': {
+      id: '/batches/'
+      path: '/'
+      fullPath: '/batches/'
+      preLoaderRoute: typeof BatchesIndexRouteImport
+      parentRoute: typeof BatchesRoute
+    }
   }
 }
+
+interface BatchesRouteChildren {
+  BatchesIndexRoute: typeof BatchesIndexRoute
+}
+
+const BatchesRouteChildren: BatchesRouteChildren = {
+  BatchesIndexRoute: BatchesIndexRoute,
+}
+
+const BatchesRouteWithChildren =
+  BatchesRoute._addFileChildren(BatchesRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AllClassesRoute: AllClassesRoute,
   AllTestsRoute: AllTestsRoute,
-  BatchesRoute: BatchesRoute,
+  BatchesRoute: BatchesRouteWithChildren,
   BattlegroundsRoute: BattlegroundsRoute,
   BookmarksRoute: BookmarksRoute,
   ChaptersRoute: ChaptersRoute,
