@@ -7,12 +7,12 @@ export type PwBatch = {
   id: string;
   name: string;
   image: string;
-  className: string;
-  exam: string;
+  byName: string;
   language: string;
-  startsOn: string;
+  type: string;
+  startDate: string;
+  endDate: string;
   price: number;
-  offPrice: number;
 };
 
 export type PwSubject = {
@@ -29,7 +29,6 @@ export type PwBatchDetails = {
   name: string;
   byName: string;
   image: string;
-  className: string;
   language: string;
   startDate: string;
   endDate: string;
