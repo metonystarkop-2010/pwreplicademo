@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
  * Plays an HLS playlist. hls.js is imported lazily inside an effect so the
  * module never enters the SSR graph.
  */
-export function HlsPlayer({ src, poster }: { src: string; poster?: string }) {
+export function HlsPlayer({ src, poster }: { src: string; poster?: string | undefined }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [error, setError] = useState("");
 

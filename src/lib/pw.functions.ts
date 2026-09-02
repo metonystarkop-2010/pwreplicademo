@@ -7,17 +7,72 @@ import type {
   PwContentKind,
 } from "./pw";
 
-const API_BASE = "https://a-pimaxer-in-45a358a228fb.herokuapp.com";
+/** Same upstream host, same proxy path shape, same sealed-payload protocol. */
+const API_BASE = "https://raghav-web-f05bab7adcec.herokuapp.com";
 const STREAM_HOST = "https://stream.srv-1.pimaxer.in";
+const SEAL_SECRET = "p9Wm4rc0::sEaLv1";
+const B64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-async function api<T>(path: string): Promise<T | null> {
+function b64Bytes(input: string): number[] {
+  const s = input.replace(/[^A-Za-z0-9+/]/g, "");
+  const out: number[] = [];
+  for (let i = 0; i < s.length; i += 4) {
+    const a = B64.indexOf(s[i] ?? "");
+    const b = B64.indexOf(s[i + 1] ?? "");
+    const c = B64.indexOf(s[i + 2] ?? "");
+    const d = B64.indexOf(s[i + 3] ?? "");
+    out.push(((a << 2) | (b >> 4)) & 255);
+    if (c >= 0) out.push((((15 & b) << 4) | (c >> 2)) & 255);
+    if (d >= 0) out.push((((3 & c) << 6) | d) & 255);
+  }
+  return out;
+}
+
+function keystream(seed: string, length: number): number[] {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < seed.length; i++) {
+    h ^= seed.charCodeAt(i);
+    h = Math.imul(h, 0x1000193) >>> 0;
+  }
+  let s = h || 0x9e3779b9;
+  const out: number[] = [];
+  for (let i = 0; i < length; i++) {
+    s ^= s << 13;
+    s >>>= 0;
+    s ^= s >>> 17;
+    s ^= s << 5;
+    s >>>= 0;
+    out.push(255 & s);
+  }
+  return out;
+}
+
+/** Unseals the `{ v: "1", d: "<salt>.<payload>" }` envelope the API returns. */
+function unseal(payload: string): unknown {
+  const dot = payload.indexOf(".");
+  if (dot < 0) throw new Error("bad payload");
+  const salt = payload.slice(0, dot);
+  const bytes = b64Bytes(payload.slice(dot + 1));
+  bytes.reverse();
+  const key = keystream(SEAL_SECRET + salt, bytes.length);
+  let text = "";
+  for (let i = 0; i < bytes.length; i++) text += String.fromCharCode((bytes[i]! ^ key[i]!) & 255);
+  const percent = text.replace(/[\s\S]/g, (ch) =>
+    `%${ch.charCodeAt(0).toString(16).padStart(2, "0")}`,
+  );
+  return JSON.parse(decodeURIComponent(percent));
+}
+
+async function api<T = unknown>(path: string): Promise<T | null> {
   try {
     const res = await fetch(`${API_BASE}${path}`, {
       headers: { accept: "application/json" },
-      signal: AbortSignal.timeout(20000),
+      signal: AbortSignal.timeout(25000),
     });
     if (!res.ok) return null;
-    return (await res.json()) as T;
+    const body = (await res.json()) as { v?: string; d?: string };
+    if (body && typeof body.d === "string" && body.v === "1") return unseal(body.d) as T;
+    return body as T;
   } catch {
     return null;
   }
@@ -33,7 +88,6 @@ function pickList(payload: unknown): Raw[] {
   const root = obj(payload);
   if (Array.isArray(root["data"])) return root["data"] as Raw[];
   const data = obj(root["data"]);
-  if (Array.isArray(data["batches"])) return data["batches"] as Raw[];
   if (Array.isArray(data["data"])) return data["data"] as Raw[];
   return [];
 }
@@ -50,6 +104,7 @@ function imageOf(v: unknown): string {
 function toHls(url: string): string {
   if (!url) return "";
   if (url.includes("youtube.com") || url.includes("youtu.be")) return url;
+  if (url.includes(".m3u8")) return url;
   const match = url.match(
     /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|[0-9a-f]{32}/i,
   );
@@ -59,15 +114,15 @@ function toHls(url: string): string {
 
 function mapBatch(b: Raw): PwBatch {
   return {
-    id: str(b["id"]) || str(b["_id"]),
-    name: str(b["name"]) || str(b["batchName"]),
-    image: str(b["pngUrl"]) || str(b["previewImage"]) || imageOf(b["previewImage"]),
-    className: str(b["className"]) || str(b["byName"]) || str(b["cohort"]),
-    exam: str(b["exam"]),
-    language: str(b["medium"]) || str(b["language"]),
-    startsOn: str(b["startsOn"]) || str(b["startDate"]),
-    price: num(b["actualPrice"]) || num(b["price"]),
-    offPrice: num(b["offPrice"]),
+    id: str(b["batchId"]) || str(b["id"]) || str(b["_id"]),
+    name: str(b["batchName"]) || str(b["name"]),
+    image: str(b["batchImage"]) || imageOf(b["previewImage"]),
+    byName: str(b["byName"]) || str(b["description"]),
+    language: str(b["language"]),
+    type: str(b["BatchType"]),
+    startDate: str(b["startDate"]),
+    endDate: str(b["endDate"]),
+    price: num(b["batchPrice"]) || num(b["price"]),
   };
 }
 
@@ -76,25 +131,23 @@ export const listBatches = createServerFn({ method: "GET" })
     page: Math.max(1, Number(input?.page) || 1),
     search: String(input?.search ?? "").trim(),
   }))
-  .handler(async ({ data }): Promise<{ batches: PwBatch[] }> => {
-    const payload = await api(`/v2/batches?mode=1&page=${data.page}`);
-    let batches = pickList(payload).map(mapBatch).filter((b) => b.id && b.name);
-    if (data.search) {
-      const q = data.search.toLowerCase();
-      batches = batches.filter(
-        (b) =>
-          b.name.toLowerCase().includes(q) ||
-          b.exam.toLowerCase().includes(q) ||
-          b.className.toLowerCase().includes(q),
-      );
-    }
-    return { batches };
+  .handler(async ({ data }): Promise<{ batches: PwBatch[]; totalPages: number }> => {
+    const path = data.search
+      ? `/api/searchBatch?name=${encodeURIComponent(data.search)}&page=${data.page}`
+      : `/api/AllBatches?page=${data.page}`;
+    const payload = await api(path);
+    const batches = pickList(payload)
+      .map(mapBatch)
+      .filter((b) => b.id && b.name);
+    return { batches, totalPages: num(obj(payload)["totalPages"]) || 1 };
   });
 
 export const getBatchDetails = createServerFn({ method: "GET" })
   .inputValidator((input: { batchId: string }) => ({ batchId: String(input.batchId) }))
   .handler(async ({ data }): Promise<PwBatchDetails | null> => {
-    const payload = await api(`/v2/batches/${data.batchId}/details`);
+    const payload = await api(
+      `/api/BatchInfo?BatchId=${encodeURIComponent(data.batchId)}&Type=details`,
+    );
     const d = obj(obj(payload)["data"]);
     const id = str(d["_id"]);
     if (!id) return null;
@@ -102,8 +155,7 @@ export const getBatchDetails = createServerFn({ method: "GET" })
       id,
       name: str(d["name"]) || str(d["batchName"]),
       byName: str(d["byName"]),
-      image: str(d["previewImage"]) || imageOf(d["previewImage"]),
-      className: str(d["class"]),
+      image: str(d["previewImage"]) || imageOf(d["previewImage"]) || str(d["batchImage"]),
       language: str(d["language"]),
       startDate: str(d["startDate"]),
       endDate: str(d["endDate"]),
@@ -128,7 +180,9 @@ export const listChapters = createServerFn({ method: "GET" })
   }))
   .handler(async ({ data }): Promise<{ chapters: PwChapter[] }> => {
     const payload = await api(
-      `/v2/batches/${data.batchId}/subject/${data.subjectId}/topics?page=${data.page}`,
+      `/api/SubjectInfo?BatchId=${encodeURIComponent(data.batchId)}&SubjectId=${encodeURIComponent(
+        data.subjectId,
+      )}&page=${data.page}`,
     );
     const chapters = pickList(payload)
       .map((t) => ({
@@ -166,22 +220,25 @@ function pdfFromHomework(item: Raw): string {
 
 export const listContents = createServerFn({ method: "GET" })
   .inputValidator(
-    (input: { batchId: string; subjectId: string; chapterId?: string; kind: PwContentKind }) => ({
+    (input: {
+      batchId: string;
+      subjectId: string;
+      chapterId: string;
+      kind: PwContentKind;
+    }) => ({
       batchId: String(input.batchId),
       subjectId: String(input.subjectId),
-      chapterId: String(input.chapterId ?? ""),
+      chapterId: String(input.chapterId),
       kind: input.kind,
     }),
   )
   .handler(async ({ data }): Promise<{ items: PwContentItem[] }> => {
-    const params = new URLSearchParams({
-      page: "1",
-      contentType: CONTENT_TYPE_BY_KIND[data.kind] ?? "videos",
-    });
-    if (data.chapterId) params.set("tag", data.chapterId);
-
     const payload = await api(
-      `/v2/batches/${data.batchId}/subject/${data.subjectId}/contents?${params.toString()}`,
+      `/api/TopicInfo?BatchId=${encodeURIComponent(data.batchId)}&SubjectId=${encodeURIComponent(
+        data.subjectId,
+      )}&TopicId=${encodeURIComponent(data.chapterId)}&ContentType=${
+        CONTENT_TYPE_BY_KIND[data.kind] ?? "videos"
+      }&page=1`,
     );
 
     const items = pickList(payload).map((raw): PwContentItem => {
@@ -190,12 +247,13 @@ export const listContents = createServerFn({ method: "GET" })
       const teachers = arr(raw["teachers"])
         .map((t) => `${str(t["firstName"])} ${str(t["lastName"])}`.trim())
         .filter(Boolean);
+      const isPdfKind = data.kind === "note" || data.kind === "dppNote";
       return {
         id: str(raw["_id"]),
         kind: data.kind,
         title: str(raw["topic"]) || str(video["name"]) || "Untitled",
         date: str(raw["startTime"]) || str(raw["date"]),
-        videoUrl: data.kind === "note" || data.kind === "dppNote" ? "" : toHls(url),
+        videoUrl: isPdfKind ? "" : toHls(url),
         pdfUrl: pdfFromHomework(raw),
         teacher: teachers[0] ?? "",
         thumbnail: str(video["image"]),
@@ -204,4 +262,21 @@ export const listContents = createServerFn({ method: "GET" })
     });
 
     return { items: items.filter((i) => i.id && (i.videoUrl || i.pdfUrl || i.title)) };
+  });
+
+/** Resolves a note/DPP attachment id into its direct PDF URL. */
+export const getPdfUrl = createServerFn({ method: "GET" })
+  .inputValidator((input: { batchId: string; subjectId: string; pdfId: string }) => ({
+    batchId: String(input.batchId),
+    subjectId: String(input.subjectId),
+    pdfId: String(input.pdfId),
+  }))
+  .handler(async ({ data }): Promise<{ url: string; name: string }> => {
+    const payload = await api(
+      `/api/GetPdf?BatchId=${encodeURIComponent(data.batchId)}&SubjectId=${encodeURIComponent(
+        data.subjectId,
+      )}&PdfId=${encodeURIComponent(data.pdfId)}`,
+    );
+    const d = obj(obj(payload)["data"]);
+    return { url: imageOf(d), name: str(d["name"]) };
   });

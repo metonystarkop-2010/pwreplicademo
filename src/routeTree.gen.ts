@@ -38,6 +38,10 @@ import { Route as ReferEarnRouteImport } from './routes/refer-earn'
 import { Route as ScholarshipRouteImport } from './routes/scholarship'
 import { Route as TestSeriesRouteImport } from './routes/test-series'
 import { Route as UpskillingRouteImport } from './routes/upskilling'
+import { Route as BatchesIndexRouteImport } from './routes/batches.index'
+import { Route as BatchesBatchIdRouteImport } from './routes/batches.$batchId'
+import { Route as BatchesBatchIdIndexRouteImport } from './routes/batches.$batchId.index'
+import { Route as BatchesBatchIdSubjectIdRouteImport } from './routes/batches.$batchId.$subjectId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -184,12 +188,32 @@ const UpskillingRoute = UpskillingRouteImport.update({
   path: '/upskilling',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BatchesIndexRoute = BatchesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BatchesRoute,
+} as any)
+const BatchesBatchIdRoute = BatchesBatchIdRouteImport.update({
+  id: '/$batchId',
+  path: '/$batchId',
+  getParentRoute: () => BatchesRoute,
+} as any)
+const BatchesBatchIdIndexRoute = BatchesBatchIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BatchesBatchIdRoute,
+} as any)
+const BatchesBatchIdSubjectIdRoute = BatchesBatchIdSubjectIdRouteImport.update({
+  id: '/$subjectId',
+  path: '/$subjectId',
+  getParentRoute: () => BatchesBatchIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/all-classes': typeof AllClassesRoute
   '/all-tests': typeof AllTestsRoute
-  '/batches': typeof BatchesRoute
+  '/batches': typeof BatchesRouteWithChildren
   '/battlegrounds': typeof BattlegroundsRoute
   '/bookmarks': typeof BookmarksRoute
   '/chapters': typeof ChaptersRoute
@@ -215,12 +239,15 @@ export interface FileRoutesByFullPath {
   '/scholarship': typeof ScholarshipRoute
   '/test-series': typeof TestSeriesRoute
   '/upskilling': typeof UpskillingRoute
+  '/batches/$batchId': typeof BatchesBatchIdRouteWithChildren
+  '/batches/': typeof BatchesIndexRoute
+  '/batches/$batchId/$subjectId': typeof BatchesBatchIdSubjectIdRoute
+  '/batches/$batchId/': typeof BatchesBatchIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/all-classes': typeof AllClassesRoute
   '/all-tests': typeof AllTestsRoute
-  '/batches': typeof BatchesRoute
   '/battlegrounds': typeof BattlegroundsRoute
   '/bookmarks': typeof BookmarksRoute
   '/chapters': typeof ChaptersRoute
@@ -246,13 +273,16 @@ export interface FileRoutesByTo {
   '/scholarship': typeof ScholarshipRoute
   '/test-series': typeof TestSeriesRoute
   '/upskilling': typeof UpskillingRoute
+  '/batches': typeof BatchesIndexRoute
+  '/batches/$batchId/$subjectId': typeof BatchesBatchIdSubjectIdRoute
+  '/batches/$batchId': typeof BatchesBatchIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/all-classes': typeof AllClassesRoute
   '/all-tests': typeof AllTestsRoute
-  '/batches': typeof BatchesRoute
+  '/batches': typeof BatchesRouteWithChildren
   '/battlegrounds': typeof BattlegroundsRoute
   '/bookmarks': typeof BookmarksRoute
   '/chapters': typeof ChaptersRoute
@@ -278,6 +308,10 @@ export interface FileRoutesById {
   '/scholarship': typeof ScholarshipRoute
   '/test-series': typeof TestSeriesRoute
   '/upskilling': typeof UpskillingRoute
+  '/batches/$batchId': typeof BatchesBatchIdRouteWithChildren
+  '/batches/': typeof BatchesIndexRoute
+  '/batches/$batchId/$subjectId': typeof BatchesBatchIdSubjectIdRoute
+  '/batches/$batchId/': typeof BatchesBatchIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -311,12 +345,15 @@ export interface FileRouteTypes {
     | '/scholarship'
     | '/test-series'
     | '/upskilling'
+    | '/batches/$batchId'
+    | '/batches/'
+    | '/batches/$batchId/$subjectId'
+    | '/batches/$batchId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/all-classes'
     | '/all-tests'
-    | '/batches'
     | '/battlegrounds'
     | '/bookmarks'
     | '/chapters'
@@ -342,6 +379,9 @@ export interface FileRouteTypes {
     | '/scholarship'
     | '/test-series'
     | '/upskilling'
+    | '/batches'
+    | '/batches/$batchId/$subjectId'
+    | '/batches/$batchId'
   id:
     | '__root__'
     | '/'
@@ -373,13 +413,17 @@ export interface FileRouteTypes {
     | '/scholarship'
     | '/test-series'
     | '/upskilling'
+    | '/batches/$batchId'
+    | '/batches/'
+    | '/batches/$batchId/$subjectId'
+    | '/batches/$batchId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AllClassesRoute: typeof AllClassesRoute
   AllTestsRoute: typeof AllTestsRoute
-  BatchesRoute: typeof BatchesRoute
+  BatchesRoute: typeof BatchesRouteWithChildren
   BattlegroundsRoute: typeof BattlegroundsRoute
   BookmarksRoute: typeof BookmarksRoute
   ChaptersRoute: typeof ChaptersRoute
@@ -612,14 +656,69 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UpskillingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/batches/': {
+      id: '/batches/'
+      path: '/'
+      fullPath: '/batches/'
+      preLoaderRoute: typeof BatchesIndexRouteImport
+      parentRoute: typeof BatchesRoute
+    }
+    '/batches/$batchId': {
+      id: '/batches/$batchId'
+      path: '/$batchId'
+      fullPath: '/batches/$batchId'
+      preLoaderRoute: typeof BatchesBatchIdRouteImport
+      parentRoute: typeof BatchesRoute
+    }
+    '/batches/$batchId/': {
+      id: '/batches/$batchId/'
+      path: '/'
+      fullPath: '/batches/$batchId/'
+      preLoaderRoute: typeof BatchesBatchIdIndexRouteImport
+      parentRoute: typeof BatchesBatchIdRoute
+    }
+    '/batches/$batchId/$subjectId': {
+      id: '/batches/$batchId/$subjectId'
+      path: '/$subjectId'
+      fullPath: '/batches/$batchId/$subjectId'
+      preLoaderRoute: typeof BatchesBatchIdSubjectIdRouteImport
+      parentRoute: typeof BatchesBatchIdRoute
+    }
   }
 }
+
+interface BatchesBatchIdRouteChildren {
+  BatchesBatchIdSubjectIdRoute: typeof BatchesBatchIdSubjectIdRoute
+  BatchesBatchIdIndexRoute: typeof BatchesBatchIdIndexRoute
+}
+
+const BatchesBatchIdRouteChildren: BatchesBatchIdRouteChildren = {
+  BatchesBatchIdSubjectIdRoute: BatchesBatchIdSubjectIdRoute,
+  BatchesBatchIdIndexRoute: BatchesBatchIdIndexRoute,
+}
+
+const BatchesBatchIdRouteWithChildren = BatchesBatchIdRoute._addFileChildren(
+  BatchesBatchIdRouteChildren,
+)
+
+interface BatchesRouteChildren {
+  BatchesBatchIdRoute: typeof BatchesBatchIdRouteWithChildren
+  BatchesIndexRoute: typeof BatchesIndexRoute
+}
+
+const BatchesRouteChildren: BatchesRouteChildren = {
+  BatchesBatchIdRoute: BatchesBatchIdRouteWithChildren,
+  BatchesIndexRoute: BatchesIndexRoute,
+}
+
+const BatchesRouteWithChildren =
+  BatchesRoute._addFileChildren(BatchesRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AllClassesRoute: AllClassesRoute,
   AllTestsRoute: AllTestsRoute,
-  BatchesRoute: BatchesRoute,
+  BatchesRoute: BatchesRouteWithChildren,
   BattlegroundsRoute: BattlegroundsRoute,
   BookmarksRoute: BookmarksRoute,
   ChaptersRoute: ChaptersRoute,
