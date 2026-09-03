@@ -16,11 +16,12 @@ const B64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 function b64Bytes(input: string): number[] {
   const s = input.replace(/[^A-Za-z0-9+/]/g, "");
   const out: number[] = [];
+  const at = (i: number): number => (i < s.length ? B64.indexOf(s[i]!) : -1);
   for (let i = 0; i < s.length; i += 4) {
-    const a = B64.indexOf(s[i] ?? "");
-    const b = B64.indexOf(s[i + 1] ?? "");
-    const c = B64.indexOf(s[i + 2] ?? "");
-    const d = B64.indexOf(s[i + 3] ?? "");
+    const a = at(i);
+    const b = at(i + 1);
+    const c = at(i + 2);
+    const d = at(i + 3);
     out.push(((a << 2) | (b >> 4)) & 255);
     if (c >= 0) out.push((((15 & b) << 4) | (c >> 2)) & 255);
     if (d >= 0) out.push((((3 & c) << 6) | d) & 255);
@@ -55,12 +56,9 @@ function unseal(payload: string): unknown {
   const bytes = b64Bytes(payload.slice(dot + 1));
   bytes.reverse();
   const key = keystream(SEAL_SECRET + salt, bytes.length);
-  let text = "";
-  for (let i = 0; i < bytes.length; i++) text += String.fromCharCode((bytes[i]! ^ key[i]!) & 255);
-  const percent = text.replace(/[\s\S]/g, (ch) =>
-    `%${ch.charCodeAt(0).toString(16).padStart(2, "0")}`,
-  );
-  return JSON.parse(decodeURIComponent(percent));
+  const plain = new Uint8Array(bytes.length);
+  for (let i = 0; i < bytes.length; i++) plain[i] = (bytes[i]! ^ key[i]!) & 255;
+  return JSON.parse(new TextDecoder().decode(plain));
 }
 
 async function api<T = unknown>(path: string): Promise<T | null> {
@@ -77,6 +75,7 @@ async function api<T = unknown>(path: string): Promise<T | null> {
     return null;
   }
 }
+
 
 type Raw = Record<string, unknown>;
 const str = (v: unknown): string => (typeof v === "string" ? v : "");

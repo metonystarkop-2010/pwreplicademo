@@ -1,6 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useServerFn } from "@tanstack/react-start";
 import { AppShell } from "@/components/pw/AppShell";
 import { PageHeader } from "@/components/pw/PageHeader";
 import { ContentOnTheWay } from "@/components/pw/EmptyState";
@@ -31,11 +30,10 @@ export const Route = createFileRoute("/batches/$batchId/")({
 
 function BatchDetailPage() {
   const { batchId } = Route.useParams();
-  const fetchDetails = useServerFn(getBatchDetails);
 
   const { data, isPending, isError, refetch } = useQuery({
     queryKey: ["pw", "batch", batchId],
-    queryFn: () => fetchDetails({ data: { batchId } }),
+    queryFn: () => getBatchDetails({ data: { batchId } }),
     staleTime: 60_000,
   });
 

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { useServerFn } from "@tanstack/react-start";
 import { FileText, Play } from "lucide-react";
 import { AppShell } from "@/components/pw/AppShell";
 import { PageHeader, XpPill } from "@/components/pw/PageHeader";
@@ -35,9 +34,6 @@ export const Route = createFileRoute("/batches/$batchId/$subjectId")({
 
 function SubjectPage() {
   const { batchId, subjectId } = Route.useParams();
-  const fetchDetails = useServerFn(getBatchDetails);
-  const fetchChapters = useServerFn(listChapters);
-  const fetchContents = useServerFn(listContents);
 
   const [chapterId, setChapterId] = useState("");
   const [kind, setKind] = useState<PwContentKind>("lecture");
@@ -45,14 +41,14 @@ function SubjectPage() {
 
   const details = useQuery({
     queryKey: ["pw", "batch", batchId],
-    queryFn: () => fetchDetails({ data: { batchId } }),
+    queryFn: () => getBatchDetails({ data: { batchId } }),
     staleTime: 60_000,
   });
   const subject = details.data?.subjects.find((s) => s.id === subjectId);
 
   const chapters = useQuery({
     queryKey: ["pw", "chapters", batchId, subjectId],
-    queryFn: () => fetchChapters({ data: { batchId, subjectId } }),
+    queryFn: () => listChapters({ data: { batchId, subjectId } }),
     staleTime: 60_000,
   });
 
@@ -63,7 +59,7 @@ function SubjectPage() {
 
   const contents = useQuery({
     queryKey: ["pw", "contents", batchId, subjectId, chapterId, kind],
-    queryFn: () => fetchContents({ data: { batchId, subjectId, chapterId, kind } }),
+    queryFn: () => listContents({ data: { batchId, subjectId, chapterId, kind } }),
     enabled: Boolean(chapterId),
     staleTime: 60_000,
   });
