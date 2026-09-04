@@ -240,27 +240,61 @@ export const listContents = createServerFn({ method: "GET" })
       }&page=1`,
     );
 
-    const items = pickList(payload).map((raw): PwContentItem => {
+    const isPdfKind = data.kind === "note" || data.kind === "dppNote";
+    const items: PwContentItem[] = [];
+
+    for (const raw of pickList(payload)) {
       const video = obj(raw["videoDetails"]);
       const url = str(raw["url"]) || str(video["url"]);
       const teachers = arr(raw["teachers"])
         .map((t) => `${str(t["firstName"])} ${str(t["lastName"])}`.trim())
         .filter(Boolean);
-      const isPdfKind = data.kind === "note" || data.kind === "dppNote";
-      return {
-        id: str(raw["_id"]),
+      const date = str(raw["startTime"]) || str(raw["date"]);
+      const baseId = str(raw["_id"]);
+
+      if (isPdfKind) {
+        // Each homework attachment is its own document row, like the source app.
+        const homeworks = arr(raw["homeworkIds"]);
+        const sources = homeworks.length ? homeworks : [raw];
+        for (const hw of sources) {
+          for (const att of arr(hw["attachmentIds"])) {
+            const pdfUrl = imageOf(att);
+            if (!pdfUrl) continue;
+            items.push({
+              id: str(att["_id"]) || baseId,
+              kind: data.kind,
+              title:
+                str(hw["topic"]) ||
+                str(att["name"]).replace(/\.pdf$/i, "") ||
+                str(raw["topic"]) ||
+                "Document",
+              date,
+              videoUrl: "",
+              pdfUrl,
+              teacher: "",
+              thumbnail: "",
+              isFree: raw["isFree"] === true,
+            });
+          }
+        }
+        continue;
+      }
+
+      items.push({
+        id: baseId,
         kind: data.kind,
         title: str(raw["topic"]) || str(video["name"]) || "Untitled",
-        date: str(raw["startTime"]) || str(raw["date"]),
-        videoUrl: isPdfKind ? "" : toHls(url),
+        date,
+        videoUrl: toHls(url),
         pdfUrl: pdfFromHomework(raw),
         teacher: teachers[0] ?? "",
         thumbnail: str(video["image"]),
         isFree: raw["isFree"] === true,
-      };
-    });
+      });
+    }
 
     return { items: items.filter((i) => i.id && (i.videoUrl || i.pdfUrl || i.title)) };
+
   });
 
 /** Resolves a note/DPP attachment id into its direct PDF URL. */
