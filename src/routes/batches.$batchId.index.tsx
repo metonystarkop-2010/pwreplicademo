@@ -1,11 +1,14 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { Check, Plus } from "lucide-react";
 import { AppShell } from "@/components/pw/AppShell";
 import { PageHeader } from "@/components/pw/PageHeader";
 import { ContentOnTheWay } from "@/components/pw/EmptyState";
 import { CardSkeletons, LoadFailed } from "@/components/pw/DataStates";
 import { getBatchDetails } from "@/lib/pw.functions";
 import { formatDate } from "@/lib/pw";
+import { useEnrolledBatches } from "@/lib/enrolled";
+
 
 export const Route = createFileRoute("/batches/$batchId/")({
   head: () => ({
