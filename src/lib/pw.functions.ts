@@ -111,6 +111,13 @@ function toHls(url: string): string {
   return `${STREAM_HOST}/${match[0]}/master.m3u8`;
 }
 
+/** Lectures without a public url are resolved from their content id. */
+function streamById(id: string): string {
+  return /^[0-9a-f]{24,32}$/i.test(id) ? `${STREAM_HOST}/${id}/master.m3u8` : "";
+}
+
+
+
 function mapBatch(b: Raw): PwBatch {
   return {
     id: str(b["batchId"]) || str(b["id"]) || str(b["_id"]),
@@ -285,7 +292,11 @@ export const listContents = createServerFn({ method: "GET" })
         kind: data.kind,
         title: str(raw["topic"]) || str(video["name"]) || "Untitled",
         date,
-        videoUrl: toHls(url),
+        videoUrl:
+          toHls(url) ||
+          streamById(str(video["_id"]) || str(video["id"])) ||
+          streamById(baseId),
+
         pdfUrl: pdfFromHomework(raw),
         teacher: teachers[0] ?? "",
         thumbnail: str(video["image"]),

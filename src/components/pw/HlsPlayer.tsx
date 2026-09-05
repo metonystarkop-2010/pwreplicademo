@@ -28,9 +28,16 @@ export function HlsPlayer({ src, poster }: { src: string; poster?: string | unde
         hls.loadSource(src);
         hls.attachMedia(video);
         hls.on(Hls.Events.ERROR, (_e, data) => {
-          if (data.fatal) setError("The lecture stream could not be loaded.");
+          if (!data.fatal) return;
+          const status = data.response?.code;
+          setError(
+            status === 403 || status === 503 || status === 401
+              ? "This lecture is locked at the source right now — free lectures play normally."
+              : "The lecture stream could not be loaded. Please try again.",
+          );
         });
         destroy = () => hls.destroy();
+
       });
     }
 
