@@ -285,7 +285,11 @@ export const listContents = createServerFn({ method: "GET" })
         kind: data.kind,
         title: str(raw["topic"]) || str(video["name"]) || "Untitled",
         date,
-        videoUrl: toHls(url),
+        videoUrl:
+          toHls(url) ||
+          streamById(str(video["_id"]) || str(video["id"])) ||
+          streamById(baseId),
+
         pdfUrl: pdfFromHomework(raw),
         teacher: teachers[0] ?? "",
         thumbnail: str(video["image"]),
