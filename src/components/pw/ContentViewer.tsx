@@ -32,7 +32,7 @@ export function ContentViewer({
             <HlsPlayer src={target.videoUrl} poster={target.thumbnail} />
           ) : target.pdfUrl ? (
             <iframe
-              src={target.pdfUrl}
+              src={`/api/public/pw-file?url=${encodeURIComponent(target.pdfUrl)}`}
               title={target.title}
               className="h-[70vh] w-full rounded-xl border border-border bg-secondary"
             />
@@ -44,7 +44,7 @@ export function ContentViewer({
 
           {target.pdfUrl && (
             <a
-              href={target.pdfUrl}
+              href={`/api/public/pw-file?url=${encodeURIComponent(target.pdfUrl)}`}
               target="_blank"
               rel="noreferrer"
               className="mt-4 inline-flex h-11 items-center rounded-xl bg-primary px-5 text-[14.5px] font-bold text-primary-foreground transition-opacity hover:opacity-90"
@@ -53,6 +53,7 @@ export function ContentViewer({
             </a>
           )}
         </div>
+
       </div>
     </div>
   );
