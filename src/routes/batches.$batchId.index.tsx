@@ -76,7 +76,34 @@ function BatchDetailPage() {
                     </span>
                   )}
                 </div>
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    enrolled
+                      ? unenroll(batchId)
+                      : enroll({ id: batchId, name: data.name, image: data.image })
+                  }
+                  className={
+                    enrolled
+                      ? "mt-5 inline-flex h-11 items-center gap-2 rounded-xl border border-banner-foreground/40 px-5 text-[14.5px] font-bold text-banner-foreground transition-colors hover:bg-card/10"
+                      : "mt-5 inline-flex h-11 items-center gap-2 rounded-xl bg-card px-5 text-[14.5px] font-bold text-primary shadow-card transition-opacity hover:opacity-90"
+                  }
+                >
+                  {enrolled ? (
+                    <>
+                      <Check className="size-[18px]" strokeWidth={2.6} />
+                      Enrolled — remove
+                    </>
+                  ) : (
+                    <>
+                      <Plus className="size-[18px]" strokeWidth={2.6} />
+                      Enroll in this batch
+                    </>
+                  )}
+                </button>
               </div>
+
             </div>
 
             <h3 className="mt-7 text-[19px] font-bold tracking-[-0.01em] text-foreground sm:text-[21px]">
