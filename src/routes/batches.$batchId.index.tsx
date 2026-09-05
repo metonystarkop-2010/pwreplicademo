@@ -40,6 +40,10 @@ function BatchDetailPage() {
     staleTime: 60_000,
   });
 
+  const { enroll, unenroll, isEnrolled } = useEnrolledBatches();
+  const enrolled = isEnrolled(batchId);
+
+
   return (
     <AppShell courseChip={{ label: data?.name || "Your Course" }}>
       <PageHeader title={data?.name || "Batch"} backTo="/batches" />
