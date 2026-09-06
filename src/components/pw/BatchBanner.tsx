@@ -8,8 +8,8 @@ export function BatchBanner() {
 
   return (
     <>
-      <section className="banner-waves relative bg-banner px-4 pb-5 pt-4 text-banner-foreground sm:px-6 sm:pb-6 sm:pt-5 lg:px-8">
-        <p className="text-[10.5px] font-semibold uppercase tracking-[0.14em] text-banner-foreground/55 sm:text-[11.5px]">
+      <section className="banner-waves relative bg-banner px-5 pb-7 pt-6 text-banner-foreground sm:px-8 sm:pb-9 sm:pt-7 lg:px-10">
+        <p className="text-[11.5px] font-semibold uppercase tracking-[0.14em] text-banner-foreground/55 sm:text-[13px]">
           Your Batch
         </p>
 
